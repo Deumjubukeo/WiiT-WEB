@@ -49,6 +49,7 @@
 
 <script>
 import TextField from '@/components/textfield/textField.vue';
+import loginAPI from '@/api/auth';
 export default {
   name: 'LoginComponent',
   components: {
@@ -67,10 +68,20 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
+      if(this.id || this.password){
+        alert("아이디")
+      }
       if (this.$refs.loginForm.validate()) {
-        alert("log")
-        console.log(this.id, this.password);
+        try {
+          const response = await loginAPI(this.id, this.password);
+          console.log('로그인 성공:', response);
+          alert('로그인 성공!');
+          
+        } catch (error) {
+          console.error(error.message);
+          alert(error.message);
+        }
       }
     }
   }
