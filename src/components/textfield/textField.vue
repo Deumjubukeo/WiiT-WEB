@@ -25,13 +25,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, computed, watch, PropType } from 'vue';
+<script>
+import { ref, computed, watch, defineComponent } from 'vue';
 import deleteButton from '@/assets/img/textfield/close_ring_fill.svg';
 import openEye from '@/assets/img/textfield/open-eye.svg';
 import closeEye from '@/assets/img/textfield/close-eye.svg';
 
-export default {
+export default defineComponent({
   name: 'TextField',
   props: {
     name: {
@@ -48,11 +48,11 @@ export default {
       default: '',
     },
     onChange: {
-      type: Function as PropType<(e: Event) => void>,
+      type: Function,
       required: false,
     },
     onKeyDown: {
-      type: Function as PropType<(e: KeyboardEvent) => void>,
+      type: Function,
       required: false,
     },
   },
@@ -61,43 +61,34 @@ export default {
     const textBox = ref(false);
     const internalValue = ref(props.value);
 
-    
     const inputType = computed(() => {
       return props.type === 'password' && !showPassword.value
         ? 'password'
         : 'text';
     });
 
-    
-    const handleChange = (e: Event) => {
-      const input = e.target as HTMLInputElement;
-      internalValue.value =
-        props.name === 'authCode' ? input.value.toUpperCase() : input.value;
-
+    const handleChange = (e) => {
       if (props.onChange) {
         props.onChange(e);
       }
     };
 
-  
     const handleClear = () => {
-  internalValue.value = '';
-  if (props.onChange) {
-    props.onChange({
-      target: {
-        name: props.name,
-        value: '',
-      } as HTMLInputElement, 
-    } as unknown as Event); 
-  }
-};
+      internalValue.value = '';
+      if (props.onChange) {
+        props.onChange({
+          target: {
+            name: props.name,
+            value: '',
+          },
+        });
+      }
+    };
 
-    
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
 
-    
     watch(
       () => props.value,
       (newValue) => {
@@ -105,8 +96,7 @@ export default {
       }
     );
 
-    
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e) => {
       if (props.onKeyDown) {
         props.onKeyDown(e);
       }
@@ -126,7 +116,7 @@ export default {
       handleKeyDown,
     };
   },
-};
+});
 </script>
 
 <style scoped>

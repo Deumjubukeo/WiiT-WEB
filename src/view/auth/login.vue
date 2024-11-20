@@ -33,7 +33,7 @@
               />
             </v-form>
           </v-card-text>
-          
+
           <v-card-actions>
             <v-btn class="w-80" style="background-color: #B7F1B3; color: white; height: 48px; font-size: 16px; font-weight: 600; border-radius: 12px;"  @click="login" :disabled="!valid">로그인</v-btn>
           </v-card-actions>
@@ -47,10 +47,12 @@
 </v-main>
 </template>
 
-<script>
+<script >
+import { defineComponent } from 'vue';
 import TextField from '@/components/textfield/textField.vue';
 import loginAPI from '@/api/auth';
-export default {
+
+export default defineComponent({
   name: 'LoginComponent',
   components: {
     TextField,
@@ -61,34 +63,32 @@ export default {
       password: '',
       valid: false,
       rules: {
-        required: v => !!v || 'This field is required',
-        id: v => /.+@.+\..+/.test(v) || 'ID must be valid',
-        min: v => (v && v.length >= 6) || 'Password must be at least 6 characters'
-      }
+        required: (v) => !!v || 'This field is required',
+        id: (v) => /.+@.+\..+/.test(v) || 'ID must be valid',
+        min: (v) => (v && v.length >= 6) || 'Password must be at least 6 characters',
+      },
     };
   },
   methods: {
     async login() {
-      if(this.id || this.password){
-        alert("아이디")
-      }
-      if (this.$refs.loginForm.validate()) {
+      const form = this.$refs.loginForm;
+      if (form.validate()) {
         try {
           const response = await loginAPI(this.id, this.password);
           console.log('로그인 성공:', response);
           alert('로그인 성공!');
-          
         } catch (error) {
           console.error(error.message);
           alert(error.message);
         }
       }
-    }
-  }
-};
+    },
+  },
+});
 </script>
 
-<style scoped>
+
+<style >
 .v-container {
   background-color: #f5f5f5;
 }

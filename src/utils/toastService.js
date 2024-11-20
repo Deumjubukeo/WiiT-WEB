@@ -1,12 +1,12 @@
-import { toast, ToastOptions, ToastPosition } from 'vue3-toastify';
+import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css'; // 스타일 추가
 
 // 토스트 알림 타입
-type ToastType = 'success' | 'error' | 'info' | 'warn';
+// type ToastType = 'success' | 'error' | 'info' | 'warn';
 
 // 토스트 알림 기본 설정
-const defaultOptions: ToastOptions = {
-  position: 'top-right' as ToastPosition, 
+const defaultOptions = {
+  position: 'top-right',
   autoClose: 5000,
   hideProgressBar: true,
   closeOnClick: true,
@@ -14,7 +14,7 @@ const defaultOptions: ToastOptions = {
 };
 
 // 토스트 알림 표시 함수
-const showToast = (message: string, type: ToastType, options: Partial<ToastOptions> = {}) => {
+const showToast = (message, type, options = {}) => {
   const mergedOptions = { ...defaultOptions, ...options };
 
   switch (type) {
@@ -37,19 +37,19 @@ const showToast = (message: string, type: ToastType, options: Partial<ToastOptio
 };
 
 // 성공 토스트
-const success = (message: string, options: Partial<ToastOptions> = {}) =>
+const success = (message, options= {}) =>
   showToast(message, 'success', options);
 
 // 오류 토스트
-const error = (message: string, options: Partial<ToastOptions> = {}) =>
+const error = (message, options= {}) =>
   showToast(message, 'error', options);
 
 // 정보 토스트
-const info = (message: string, options: Partial<ToastOptions> = {}) =>
+const info = (message, options= {}) =>
   showToast(message, 'info', options);
 
 // 경고 토스트
-const warn = (message: string, options: Partial<ToastOptions> = {}) =>
+const warn = (message, options= {}) =>
   showToast(message, 'warn', options);
 
 export default {

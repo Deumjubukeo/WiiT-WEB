@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const apiClient = axios.create({
   baseURL: '', 
   headers: {
@@ -7,16 +6,14 @@ const apiClient = axios.create({
   },
 });
 
-const login = async (id, password) => {
+const login = async (id, password)=> {
   try {
-    const response = await apiClient.post('/login', {
-      id,
-      password,
-    });
+    const response = await apiClient.post('/login', { id, password });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || '로그인에 실패했습니다.');
+    throw new Error(error.response?.data?.message || '로그인에 실패했습니다.');
   }
 };
+
 
 export default login;
