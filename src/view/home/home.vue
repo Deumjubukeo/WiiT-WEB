@@ -10,7 +10,7 @@
 <script>
 import Header from "@/components/header/header.vue";
 import Product from "@/components/product/product.vue";
-import { goodsLost } from "@/api/goods.js";
+import { goodsList } from "@/api/goods.js";
 
 export default {
   name: "HomeComponents",
@@ -28,7 +28,7 @@ export default {
   methods: {
     async fetchProducts() {
       try {
-        const data = await goodsLost(this.page, this.size);
+        const data = await goodsList(this.page, this.size);
         this.products = data.data || []; 
         
       } catch (error) {

@@ -10,15 +10,18 @@
       <div class="buttonBox">
         <v-app-bar-title>
           <v-btn
+            class="text-h6 font-weight-bold"
             rounded="xl"
             :class="{ active: $route.path === '/' }"
             @click="$router.push('/')"
+          
           >
             상품
           </v-btn>
         </v-app-bar-title>
         <v-app-bar-title>
           <v-btn
+            class="text-h6 font-weight-bold"
             rounded="xl"
             :class="{ active: $route.path === '/popular' }"
             @click="$router.push('/popular')"
