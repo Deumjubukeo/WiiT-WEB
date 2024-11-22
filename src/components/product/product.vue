@@ -9,12 +9,12 @@
         v-for="(product, index) in products" 
         :key="index"
       >
-        <v-card class="product-card" style="width: 100%; height: 20rem;" >
+        <v-card class="product-card rounded-xl" hover style="width: 100%; height: 20rem;" >
           <v-img :src="product.image" height="60%"></v-img>
           <v-card-title>{{ product.title }}</v-card-title>
           <v-card-subtitle>{{ product.content }}</v-card-subtitle>
           <v-card-text>
-            <div class="price">{{ product.prize }}원</div>
+            <div class="price">{{ product.prize }} POINT</div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -42,8 +42,9 @@
   }
   
   .price {
-    font-weight: bold;
-    color: #4caf50;
+    font-size: 1.7rem;
+    font-weight: bolder;
+    color: #F1B3B3;
   }
   </style>
   
