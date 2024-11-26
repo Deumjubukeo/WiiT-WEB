@@ -10,7 +10,7 @@
         :key="index"
       >
         <v-card class="product-card rounded-xl" hover style="width: 100%; height: 20rem;" >
-          <v-img :src="product.image" height="60%"></v-img>
+          <v-img :src="product.imageUrl" height="60%"></v-img>
           <v-card-title>{{ product.title }}</v-card-title>
           <v-card-subtitle>{{ product.content }}</v-card-subtitle>
           <v-card-text>

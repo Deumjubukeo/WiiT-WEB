@@ -12,7 +12,7 @@
           hover
           style="width: 100%; height: 20rem; position: relative;"
         >
-          <v-img :src="product.image" height="60%" contain></v-img>
+          <v-img :src="product.imageUrl" height="60%" contain></v-img>
           <v-card-title>{{ product.title }}</v-card-title>
           <v-card-subtitle>{{ product.content }}</v-card-subtitle>
           <v-card-text>

@@ -15,12 +15,13 @@
             style="width: 100%; height: 20rem; position: relative;"
           >
             <div
+            style="z-index: 2;"
               v-if="index < 3"
               :class="['rating', getRatingClass(index)]"
             >
               {{ index + 1 }}
             </div>
-            <v-img :src="product.image" height="60%"></v-img>
+            <v-img :src="product.imageUrl" height="60%" style="object-fit: cover;"></v-img>
             <v-card-title>{{ product.title }}</v-card-title>
             <v-card-subtitle>{{ product.content }}</v-card-subtitle>
             <v-card-text>
