@@ -2,7 +2,7 @@
   <v-main style="background-color: #F3F3F3;" > 
     <Header></Header>
     <v-main  class="home-container">
-      <div style="width: 100%; height: 40%; margin-bottom: 10%;">
+      <div style="width: 100%; height: 40%; margin-bottom: 10rem;">
 
         <TodayProduct/>
       </div>
