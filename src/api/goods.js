@@ -25,3 +25,13 @@ export const popularGoodsList = async(page, size)=>{
     
   }
 }
+
+export const createGoods = async (goodsData) => {
+  try {
+    const response = await apiClient.post('/goods/create', goodsData);
+    return response.data;
+  } catch (error) {
+    console.error('상품 등록 중 오류 발생:', error);
+    throw error;
+  }
+};

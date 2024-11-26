@@ -5,7 +5,7 @@ import {
 } from "@/constants/token.constants";
 
 class Token {
-    getToken(key) {
+  getToken(key) {
     return cookie.getCookie(key);
   }
 

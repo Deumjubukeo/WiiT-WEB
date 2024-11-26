@@ -1,105 +1,74 @@
 <template>
-  <div class="text-field-main" :class="{ active: textBox }">
+  <div class="text-field-main" :class="{ active: textBox }" :style="customStyle">
     <input
-      :name="name"
-      :value="internalValue"
-      @input="handleChange"
+    :name="name"
+      v-model="internalValue" 
       :placeholder="placeholder"
       :type="inputType"
       :maxlength="name === 'memberEmail' ? 30 : 15"
-      @keydown="handleKeyDown"
+      @keydown="onKeyDown"
+      @blur="handleBlur"
       class="text-field"
     />
     <img
       v-if="type === 'text'"
       :src="deleteButton"
       @click="handleClear"
-      alt="clear button"
+      alt="Clear Input"
     />
     <img
       v-else
       :src="showPassword ? openEye : closeEye"
       @click="togglePasswordVisibility"
-      alt="toggle password visibility"
+      alt="Toggle Password Visibility"
     />
   </div>
 </template>
 
 <script>
-import { ref, computed, watch, defineComponent } from 'vue';
-import deleteButton from '@/assets/img/textfield/close_ring_fill.svg';
-import openEye from '@/assets/img/textfield/open-eye.svg';
-import closeEye from '@/assets/img/textfield/close-eye.svg';
+import { ref, computed, defineComponent, watch } from "vue";
+import deleteButton from "@/assets/img/textfield/close_ring_fill.svg";
+import openEye from "@/assets/img/textfield/open-eye.svg";
+import closeEye from "@/assets/img/textfield/close-eye.svg";
 
 export default defineComponent({
-  name: 'TextField',
+  name: "TextField",
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
+    name: String,
     placeholder: String,
     type: {
       type: String,
-      default: '',
+      default: "text",
     },
-    value: {
-      type: String,
-      default: '',
-    },
-    onChange: {
-      type: Function,
-      required: false,
-    },
-    onKeyDown: {
-      type: Function,
-      required: false,
-    },
+    modelValue: String, 
+    customStyle: Object,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const showPassword = ref(false);
     const textBox = ref(false);
-    const internalValue = ref(props.value);
+    const internalValue = ref(props.modelValue);
 
-    const inputType = computed(() => {
-      return props.type === 'password' && !showPassword.value
-        ? 'password'
-        : 'text';
+    const inputType = computed(() =>
+      props.type === "password" && !showPassword.value ? "password" : "text"
+    );
+
+    watch(() => props.modelValue, (newValue) => {
+      internalValue.value = newValue;
+      console.log(internalValue.value);
+      
     });
 
-    const handleChange = (e) => {
-      if (props.onChange) {
-        props.onChange(e);
-      }
-    };
-
-    const handleClear = () => {
-      internalValue.value = '';
-      if (props.onChange) {
-        props.onChange({
-          target: {
-            name: props.name,
-            value: '',
-          },
-        });
-      }
-    };
+    watch(internalValue, (newValue) => {
+      emit("update:modelValue", newValue); 
+    });
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
 
-    watch(
-      () => props.value,
-      (newValue) => {
-        internalValue.value = newValue;
-      }
-    );
 
-    const handleKeyDown = (e) => {
-      if (props.onKeyDown) {
-        props.onKeyDown(e);
-      }
+    const handleBlur = () => {
+      textBox.value = false;
     };
 
     return {
@@ -107,13 +76,11 @@ export default defineComponent({
       textBox,
       internalValue,
       inputType,
-      handleChange,
-      handleClear,
       togglePasswordVisibility,
+      handleBlur,
       deleteButton,
       openEye,
       closeEye,
-      handleKeyDown,
     };
   },
 });
@@ -130,8 +97,8 @@ export default defineComponent({
   border: 1px solid #c4c4c4;
   background: #fff;
 }
-.text-field-main.active {
-  border-color: #1a9a18;
+.text-field-main:focus {
+  border: 1px solid #1a9a18;
 }
 .text-field {
   width: 80%;

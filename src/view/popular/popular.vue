@@ -24,7 +24,7 @@ export default{
     };
   },
   methods: {
-    async fetchProducts() {
+    async Products() {
       try {
         const data = await popularGoodsList(this.page, this.size);
         this.products = data.data || []; 
@@ -35,7 +35,7 @@ export default{
     },
   },
   mounted() {
-    this.fetchProducts(); 
+    this.Products(); 
   },
 }
 </script>

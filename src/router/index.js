@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router'; 
 import Home from '@/view/home/home.vue';
 import LoginPage from '@/view/auth/login.vue';
-import popular from '@/view/popular/popular.vue';
+import Popular from '@/view/popular/popular.vue';
+import CreateGoods from '@/view/create/createGoods.vue';
 Vue.use(Router); 
 
 export const router = new Router({
@@ -18,7 +19,11 @@ export const router = new Router({
     },
     {
       path: '/popular',
-      component: popular,
+      component: Popular,
     },
+    {
+      path: '/create',
+      component: CreateGoods,
+    }
   ],
 });

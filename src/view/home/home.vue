@@ -2,6 +2,10 @@
   <v-main style="background-color: #F3F3F3;" > 
     <Header></Header>
     <v-main  class="home-container">
+      <div style="width: 100%; height: 40%; margin-bottom: 10%;">
+
+        <TodayProduct/>
+      </div>
       <Product :products="products" />
     </v-main>
   </v-main>
@@ -10,13 +14,16 @@
 <script>
 import Header from "@/components/header/header.vue";
 import Product from "@/components/product/product.vue";
+import TodayProduct from "@/components/product/todayProduct.vue";
 import { goodsList } from "@/api/goods.js";
+
 
 export default {
   name: "HomeComponents",
   components: {
     Header,
     Product,
+    TodayProduct,
   },
   data() {
     return {
