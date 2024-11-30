@@ -28,10 +28,30 @@ export const popularGoodsList = async(page, size)=>{
 
 export const createGoods = async (goodsData) => {
   try {
-    const response = await apiClient.post('/goods/create', goodsData);
-    return response.data;
+    const response = await apiClient.post("/goods/create", goodsData);
+    return response;
   } catch (error) {
-    console.error('상품 등록 중 오류 발생:', error);
+    console.error("상품 등록 중 오류 발생:", error);
     throw error;
   }
 };
+
+
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);  
+
+  try {
+    const response = await apiClient.post("/aws/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data.url; 
+  } catch (error) {
+    console.error("이미지 업로드 중 오류 발생:", error);
+    throw error;
+  }
+};
+
+

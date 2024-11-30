@@ -25,7 +25,7 @@
             <v-card-title>{{ product.title }}</v-card-title>
             <v-card-subtitle>{{ product.content }}</v-card-subtitle>
             <v-card-text>
-              <div class="price">{{ product.prize }} POINT</div>
+              <div class="price">{{ product.price }} POINT</div>
             </v-card-text>
           </v-card>
         </v-col>
