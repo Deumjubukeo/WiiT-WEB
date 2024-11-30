@@ -34,17 +34,19 @@
                       style="display: flex; flex-direction: column; gap: 20px;"
                       @submit.prevent="handleSubmit"
                     >
-                      <TextField
-                        v-model="loginData.Id"
+                    <TextField
+                        :value="loginData.userId"
+                        @updateState="(value) => (loginData.userId = value)"
                         :name="'Id'"
-                        :placeholder="'아이디를 입력해주세요'"
-                        :type="'text'"
+                        placeholder="아이디를 입력해주세요"
+                        type="text"
                       />
                       <TextField
-                        v-model="loginData.Password"
+                        :value="loginData.password"
+                        @updateState="(value) => (loginData.password = value)"
                         :name="'Password'"
-                        :placeholder="'비밀번호를 입력해주세요'"
-                        :type="'password'"
+                        placeholder="비밀번호를 입력해주세요"
+                        type="password"
                       />
                     </v-form>
                   </v-card-text>
@@ -61,7 +63,7 @@
                         border-radius: 12px;
                       "
                       @click="handleSubmit"
-                      :disabled="isValid"
+                      :disabled="!isValid"
                     >
                       로그인
                     </v-btn>
@@ -77,42 +79,53 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs, computed } from "vue";
+import { defineComponent} from "vue";
 import TextField from "@/components/textfield/textField.vue";
+import login from "@/api/auth";
+import showToast from "@/utils/toastService"; 
+import token from "@/lib/token";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/token.constants";
 
 export default defineComponent({
   name: "LoginComponent",
   components: {
     TextField,
   },
-  setup() {
-
-    const loginData = reactive({
-      Id: "",
-      Password: "",
-    });
-
-
-    const isValid = computed(() => {
-      return loginData.Id !== "" && loginData.Password !== "";
-    });
-
-
-    const handleSubmit = () => {
-      console.log("로그인 데이터:", loginData.Id);
-
-    };
-
+  data() {
     return {
-      ...toRefs(loginData), 
-      isValid,
-      loginData,
-      handleSubmit,
+      loginData: {
+        userId: "",
+        password: "",
+      },
     };
+  },
+  computed: {
+    isValid() {
+      return this.loginData.userId !== "" && this.loginData.password !== "";
+    },
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        const res = await login(this.loginData.userId, this.loginData.password);  
+        console.log(res);
+        if (res.status) {
+          token.setToken(ACCESS_TOKEN_KEY, res.data.accessToken);
+          token.setToken(REFRESH_TOKEN_KEY, res.data.refreshToken);
+          
+          showToast("로그인 성공", "success", 3000);
+          
+          // 로그인 성공 후, 라우터 이동
+          this.$router.push("/");  // 루트 페이지로 이동
+        }
+      } catch (error) {
+        showToast("로그인 실패", "error", 3000);
+        console.error(error);
+      }
+    },
   },
 });
 </script>
-
 
 <style>
 .v-container {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import token from "@/lib/token";
-import { REQUEST_TOKEN_KEY, ACCESS_TOKEN_KEY } from "@/constants/token.constants";
+import { REQUEST_TOKEN_KEY, ACCESS_TOKEN_KEY,REFRESH_TOKEN_KEY } from "@/constants/token.constants";
 import CONFIG from "@/config/config.json";
 
 export const apiClient = axios.create({
@@ -38,7 +38,7 @@ apiClient.interceptors.response.use(
 
       try {
       
-        const refreshToken = token.getToken("REFRESH_TOKEN_KEY");
+        const refreshToken = token.getToken(REFRESH_TOKEN_KEY);
         console.log(refreshToken);
         
         const response = await axios.post(`${CONFIG.serverUrl}/auth/refresh`, {

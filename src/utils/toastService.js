@@ -1,51 +1,21 @@
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css'; 
+import Vue from "vue";
+import Toast from "@/components/toast/toast.vue"; 
 
-const defaultOptions = {
-  position: 'top-right',
-  autoClose: 5000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
+const ToastConstructor = Vue.extend(Toast);
+
+const showToast = (message, type = "info", duration = 3000) => {
+  const toastInstance = new ToastConstructor(); // Toast 인스턴스 생성
+  toastInstance.$mount(); // 인스턴스를 수동으로 마운트
+  document.body.appendChild(toastInstance.$el); // DOM에 추가
+
+  // Toast 표시
+  toastInstance.showToast(message, type, duration);
+
+  // 애니메이션 종료 후 DOM에서 제거
+  setTimeout(() => {
+    document.body.removeChild(toastInstance.$el);
+    toastInstance.$destroy();
+  }, duration + 300); // fade-out 애니메이션 고려
 };
 
-const showToast = (message, type, options = {}) => {
-  const mergedOptions = { ...defaultOptions, ...options };
-
-  switch (type) {
-    case 'success':
-      toast.success(message, mergedOptions);
-      break;
-    case 'error':
-      toast.error(message, mergedOptions);
-      break;
-    case 'info':
-      toast.info(message, mergedOptions);
-      break;
-    case 'warn':
-      toast.warn(message, mergedOptions);
-      break;
-    default:
-      toast(message, mergedOptions);
-      break;
-  }
-};
-
-const success = (message, options= {}) =>
-  showToast(message, 'success', options);
-
-const error = (message, options= {}) =>
-  showToast(message, 'error', options);
-
-const info = (message, options= {}) =>
-  showToast(message, 'info', options);
-
-const warn = (message, options= {}) =>
-  showToast(message, 'warn', options);
-
-export default {
-  success,
-  error,
-  info,
-  warn,
-};
+export default showToast;

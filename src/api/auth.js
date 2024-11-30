@@ -1,10 +1,10 @@
 import { apiClient } from "./axios";
 
 
-const login = async (id, password)=> {
+const login = async (userId, password)=> {
   try {
-    const response = await apiClient.post('/login', { id, password });
-    return response.data;
+    const response = await apiClient.post('/auth/signin', { userId, password });
+    return response;
   } catch (error) {
     throw new Error(error.response?.data?.message || '로그인에 실패했습니다.');
   }
