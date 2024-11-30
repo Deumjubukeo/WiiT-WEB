@@ -1,4 +1,5 @@
 import { apiClient } from "./axios";
+import showToast from "@/utils/toastService";
 
 export const goodsList = async (page, size) => {
     try {
@@ -51,6 +52,18 @@ export const uploadImage = async (file) => {
   } catch (error) {
     console.error("이미지 업로드 중 오류 발생:", error);
     throw error;
+  }
+};
+
+
+export const purchaseGoods = async (productId, userId) => {
+  try {
+    const response = await apiClient.post(
+      `/goods/purchase?id=${productId}&userId=${userId}`,
+    );
+    return response;
+  } catch (error) {
+    showToast("구매실패", "error");
   }
 };
 

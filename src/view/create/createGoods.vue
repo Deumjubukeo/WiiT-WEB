@@ -103,7 +103,6 @@ export default {
         const res = await createGoods(productData);
         if(res.status === 201){
         showToast("상품등록 성공","success");
-        this.$router.push('/');  
         }
       } catch (error) {
         showToast("상품등록 실패", "error");
