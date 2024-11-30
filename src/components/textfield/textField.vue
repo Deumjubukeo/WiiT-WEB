@@ -1,12 +1,11 @@
 <template>
   <div class="text-field-main" :class="{ active: textBox }" :style="customStyle">
     <input
-    :name="name"
-      v-model="internalValue" 
+      :name="name"
+      :value="value"
+      @input="handleInput"
       :placeholder="placeholder"
       :type="inputType"
-      :maxlength="name === 'memberEmail' ? 30 : 15"
-      @keydown="onKeyDown"
       @blur="handleBlur"
       class="text-field"
     />
@@ -26,7 +25,7 @@
 </template>
 
 <script>
-import { ref, computed, defineComponent, watch } from "vue";
+import { ref, computed, defineComponent } from "vue";
 import deleteButton from "@/assets/img/textfield/close_ring_fill.svg";
 import openEye from "@/assets/img/textfield/open-eye.svg";
 import closeEye from "@/assets/img/textfield/close-eye.svg";
@@ -34,50 +33,48 @@ import closeEye from "@/assets/img/textfield/close-eye.svg";
 export default defineComponent({
   name: "TextField",
   props: {
+    value: String,
     name: String,
     placeholder: String,
     type: {
       type: String,
       default: "text",
     },
-    modelValue: String, 
     customStyle: Object,
   },
+  emits: ["updateState"],
   setup(props, { emit }) {
     const showPassword = ref(false);
     const textBox = ref(false);
-    const internalValue = ref(props.modelValue);
 
     const inputType = computed(() =>
       props.type === "password" && !showPassword.value ? "password" : "text"
     );
 
-    watch(() => props.modelValue, (newValue) => {
-      internalValue.value = newValue;
-      console.log(internalValue.value);
-      
-    });
-
-    watch(internalValue, (newValue) => {
-      emit("update:modelValue", newValue); 
-    });
+    const handleInput = (event) => {
+      emit("updateState", event.target.value);
+    };
 
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
 
-
     const handleBlur = () => {
       textBox.value = false;
+    };
+
+    const handleClear = () => {
+      emit("updateState", "");
     };
 
     return {
       showPassword,
       textBox,
-      internalValue,
       inputType,
       togglePasswordVisibility,
       handleBlur,
+      handleInput,
+      handleClear,
       deleteButton,
       openEye,
       closeEye,
