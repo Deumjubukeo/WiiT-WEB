@@ -115,8 +115,8 @@ export default defineComponent({
           
           showToast("로그인 성공", "success", 3000);
           
-          // 로그인 성공 후, 라우터 이동
-          this.$router.push("/");  // 루트 페이지로 이동
+       
+          this.$router.push("/");  
         }
       } catch (error) {
         showToast("로그인 실패", "error", 3000);
