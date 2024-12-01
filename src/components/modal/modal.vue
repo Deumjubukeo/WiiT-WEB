@@ -45,8 +45,8 @@ export default {
       this.isScanning = false; 
     },
 
-    onQRCodeScanned(userId) {
-      console.log("QR 코드 스캔 결과:", userId);
+    onQRCodeScanned(id) {
+      const userId = id.split("_")[1];
       this.purchaseProduct(userId);
     },
 
@@ -62,12 +62,15 @@ export default {
     async purchaseProduct(userId) {
       try {
         const res = await purchaseGoods(this.product.id, userId);
-        if (res.status === 200) {
+        if (res.status === 201) {
           showToast("결제성공", "success");
+          this.closeModal();
+        }else if (res.status === 400) {
+          showToast("포인트 부족", "error");
           this.closeModal();
         }
       } catch (error) {
-        console.error("구매 요청 실패:", error);
+        showToast("결제실패", "error");
       }
     },
   },

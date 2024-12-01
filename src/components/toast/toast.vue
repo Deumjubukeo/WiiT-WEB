@@ -22,13 +22,13 @@ export default {
       duration: 3000,
       startTime: null,
       remainingTime: 0,
-      isPaused: false, // Hover 상태 확인
+      isPaused: false, 
     };
   },
   computed: {
     progressBarStyle() {
       const elapsed = this.isPaused
-        ? 0 // Hover 상태에서는 진행률 고정
+        ? 0 
         : Date.now() - this.startTime;
       const progress = Math.min(
         ((this.duration - this.remainingTime + elapsed) / this.duration) * 100,

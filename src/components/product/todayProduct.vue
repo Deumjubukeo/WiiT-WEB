@@ -11,6 +11,7 @@
           class="product-card rounded-xl"
           hover
           style="width: 100%; height: 20rem; position: relative;"
+          @click="showModal(product)" 
         >
           <v-img :src="product.imageUrl" height="60%" contain></v-img>
           <v-card-title>{{ product.title }}</v-card-title>
@@ -21,6 +22,11 @@
         </v-card>
       </v-col>
     </v-row>
+    <Modal 
+      :product="selectedProduct"  
+      :isVisible="isModalVisible" 
+      @close="closeModal"
+    ></Modal>
   </v-app>
 </template>
 
@@ -28,15 +34,21 @@
 
 <script>
 import { popularGoodsList } from "@/api/goods";
+import Modal from '../modal/modal.vue';
 
 export default {
   name: "TodayProduct",
+  components: {
+    Modal,
+  },
   data() {
     return {
       page: 1,
       size: 10,
       products: [],
       visibleCount: 4, 
+      selectedProduct: null, 
+      isModalVisible: false, 
     };
   },
   computed: {
@@ -45,6 +57,14 @@ export default {
     },
   },
   methods: {
+    showModal(product) {
+      this.selectedProduct = product;
+      this.isModalVisible = true;
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
+    },
     async fetchProducts() {
       try {
         const data = await popularGoodsList(this.page, this.size);

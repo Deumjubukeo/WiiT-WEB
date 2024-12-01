@@ -2,8 +2,7 @@
   <v-main style="background-color: #F3F3F3;" > 
     <Header></Header>
     <v-main  class="home-container">
-      <div style="width: 100%; height: 40%; margin-bottom: 10rem;">
-
+      <div style="width: 100%; height: 25%; margin-bottom: 10rem; position: relative;">
         <TodayProduct/>
       </div>
       <Product :products="products" />

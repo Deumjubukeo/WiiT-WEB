@@ -32,7 +32,7 @@
       </v-col>
     </v-row>
 
-    <!-- Modal 컴포넌트 -->
+  
     <Modal 
       :product="selectedProduct"  
       :isVisible="isModalVisible" 
@@ -47,7 +47,7 @@ import Modal from '../modal/modal.vue';
 export default {
   name: "PopularProduct",
   components: {
-    Modal,  // Modal 컴포넌트를 여기에서 등록합니다.
+    Modal,  
   },
   props: {
     products: {
@@ -68,7 +68,7 @@ export default {
       this.isModalVisible = true;
     },
     closeModal() {
-      this.isModalVisible = false;  // 모달을 닫는 기능을 추가합니다.
+      this.isModalVisible = false;  
     },
     getRatingClass(index) {
       switch (index) {

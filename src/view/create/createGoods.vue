@@ -2,6 +2,7 @@
   <v-main style="background-color: #F3F3F3;">
     <Header></Header>
     <v-main class="home-container">
+     
       <v-container style="display: flex; justify-content: center;">
         <v-card
           class="create-card"
@@ -56,7 +57,13 @@
             </v-container>
           </v-form>
         </v-card>
+
       </v-container>
+      <div style="width: 100%; height: 44rem; position: relative; overflow: hidden; overflow-y: scroll; background-color: #fff;border-radius: 20px; padding: 30px;">
+        <h2>상품 삭제</h2>
+      <deleteProduct>
+      </deleteProduct>
+    </div>
     </v-main>
   </v-main>
 </template>
@@ -65,12 +72,13 @@
 import Header from "@/components/header/header.vue";
 import { createGoods, uploadImage } from "@/api/goods";
 import showToast from "@/utils/toastService";
-
+import deleteProduct from "@/components/product/deleteProduct.vue";
 
 export default {
   name: "CreateGoodsPage",
   components: {
     Header,
+    deleteProduct
   },
   data() {
     return {
@@ -116,7 +124,7 @@ export default {
 <style>
 .home-container {
   min-width: 300px;
-  height: 100vh;
+  height: 180vh;
   margin-top: 10px;
   padding: 2rem !important;
 }
